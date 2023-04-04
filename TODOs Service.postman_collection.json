@@ -1,0 +1,168 @@
+{
+	"info": {
+		"_postman_id": "07ae3f95-a0ee-477e-877b-49f78c0706ce",
+		"name": "TODOs Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21415031"
+	},
+	"item": [
+		{
+			"name": "List",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{api_url}}",
+					"host": [
+						"{{api_url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"text\": \"hey there\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api_url}}",
+					"host": [
+						"{{api_url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{api_url}}/{{todo_id}}",
+					"host": [
+						"{{api_url}}"
+					],
+					"path": [
+						"{{todo_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"text\": \"done!!!\",\n    \"checked\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api_url}}/{{todo_id}}",
+					"host": [
+						"{{api_url}}"
+					],
+					"path": [
+						"{{todo_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{api_url}}/{{todo_id}}",
+					"host": [
+						"{{api_url}}"
+					],
+					"path": [
+						"{{todo_id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "protocol",
+			"value": "http",
+			"type": "string"
+		},
+		{
+			"key": "localstack_host",
+			"value": "localhost",
+			"type": "string"
+		},
+		{
+			"key": "localstack_port",
+			"value": "4566",
+			"type": "string"
+		},
+		{
+			"key": "api_id",
+			"value": "<THE API ID>",
+			"type": "string"
+		},
+		{
+			"key": "path",
+			"value": "local/_user_request_",
+			"type": "string"
+		},
+		{
+			"key": "todos_path",
+			"value": "todos",
+			"type": "string"
+		},
+		{
+			"key": "api_url",
+			"value": "{{protocol}}://{{localstack_host}}:{{localstack_port}}/restapis/{{api_id}}/{{path}}/{{todos_path}}",
+			"type": "string"
+		},
+		{
+			"key": "todo_id",
+			"value": "<SOME TODO OBJECT ID>"
+		}
+	]
+}
