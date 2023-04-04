@@ -80,7 +80,7 @@ functions:
 
 ## Check out the API
 
-You can use the [Postman Collection in this repo](/TODOs%20Service.postman_collection.json) to interact with the API.
+You can use the [Postman Collection in this repo](/postman_collection.json) to interact with the API.
 Just import it into Postman and configure the collection variables.
 
 
