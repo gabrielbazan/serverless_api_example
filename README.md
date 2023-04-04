@@ -66,22 +66,22 @@ serverless deploy --stage local
 
 You should get something like the following. Notice the endpoint URL:
 ```
-✔ Service deployed to stack todos-service (22s)
+✔ Service deployed to stack todos-service
 
 endpoint: http://localhost:4566/restapis/{{ENDPOINT URL}}/local/_user_request_
 functions:
   create: todos-service-create
   list: todos-service-list
-  get: todos-service-get
+  get: todos-service-read
   update: todos-service-update
   delete: todos-service-delete
 ```
 
 
-## Check out the API
+## Check the API out
 
 You can use the [Postman Collection in this repo](/postman_collection.json) to interact with the API.
-Just import it into Postman and configure the collection variables.
+Just import it into Postman and set the collection variables (the API ID, mainly).
 
 
 ## Useful Stuff

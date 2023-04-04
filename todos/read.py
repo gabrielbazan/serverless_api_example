@@ -6,7 +6,7 @@ import boto3
 dynamodb = boto3.resource('dynamodb', endpoint_url=os.environ['AWS_ENDPOINT_URL'])
 
 
-def get(event, context):
+def handler(event, context):
     table = dynamodb.Table(os.environ['DYNAMODB_TABLE'])
 
     result = table.get_item(
@@ -19,4 +19,3 @@ def get(event, context):
         "statusCode": 200,
         "body": json.dumps(result['Item'])
     }
-

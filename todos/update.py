@@ -8,7 +8,7 @@ import boto3
 dynamodb = boto3.resource('dynamodb', endpoint_url=os.environ['AWS_ENDPOINT_URL'])
 
 
-def update(event, context):
+def handler(event, context):
     data = json.loads(event['body'])
 
     if 'text' not in data or 'checked' not in data:
