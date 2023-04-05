@@ -12,9 +12,9 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{api_url}}",
+					"raw": "{{todos_uri}}",
 					"host": [
-						"{{api_url}}"
+						"{{todos_uri}}"
 					]
 				}
 			},
@@ -35,9 +35,9 @@
 					}
 				},
 				"url": {
-					"raw": "{{api_url}}",
+					"raw": "{{todos_uri}}",
 					"host": [
-						"{{api_url}}"
+						"{{todos_uri}}"
 					]
 				}
 			},
@@ -49,9 +49,9 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{api_url}}/{{todo_id}}",
+					"raw": "{{todos_uri}}/{{todo_id}}",
 					"host": [
-						"{{api_url}}"
+						"{{todos_uri}}"
 					],
 					"path": [
 						"{{todo_id}}"
@@ -75,9 +75,9 @@
 					}
 				},
 				"url": {
-					"raw": "{{api_url}}/{{todo_id}}",
+					"raw": "{{todos_uri}}/{{todo_id}}",
 					"host": [
-						"{{api_url}}"
+						"{{todos_uri}}"
 					],
 					"path": [
 						"{{todo_id}}"
@@ -92,9 +92,9 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{api_url}}/{{todo_id}}",
+					"raw": "{{todos_uri}}/{{todo_id}}",
 					"host": [
-						"{{api_url}}"
+						"{{todos_uri}}"
 					],
 					"path": [
 						"{{todo_id}}"
@@ -157,7 +157,12 @@
 		},
 		{
 			"key": "api_url",
-			"value": "{{protocol}}://{{localstack_host}}:{{localstack_port}}/restapis/{{api_id}}/{{path}}/{{todos_path}}",
+			"value": "{{protocol}}://{{localstack_host}}:{{localstack_port}}/restapis/{{api_id}}/{{path}}",
+			"type": "string"
+		},
+		{
+			"key": "todos_uri",
+			"value": "{{api_url}}/{{todos_path}}",
 			"type": "string"
 		},
 		{

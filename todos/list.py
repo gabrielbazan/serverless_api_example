@@ -1,16 +1,12 @@
 import json
-import os
 
-import boto3
-
-client = boto3.client(
-    "dynamodb",
-    endpoint_url=os.environ["AWS_ENDPOINT_URL"],
-)
+from .aws import get_dynamodb_table
 
 
 def handler(event, context):
-    result = client.scan(TableName=os.environ["DYNAMODB_TABLE"])
+    table = get_dynamodb_table()
+
+    result = table.scan()
 
     return {
         "statusCode": 200,

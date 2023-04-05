@@ -1,15 +1,8 @@
-import os
-
-import boto3
-
-dynamodb = boto3.resource(
-    "dynamodb",
-    endpoint_url=os.environ["AWS_ENDPOINT_URL"],
-)
+from .aws import get_dynamodb_table
 
 
 def handler(event, context):
-    table = dynamodb.Table(os.environ["DYNAMODB_TABLE"])
+    table = get_dynamodb_table()
 
     table.delete_item(Key={"id": event["pathParameters"]["id"]})
 

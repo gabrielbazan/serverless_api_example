@@ -102,3 +102,28 @@ This would show and follow the execution logs of the "update" function:
 ```bash
 aws --endpoint-url=http://localhost:4566 --profile localstack logs tail /aws/lambda/todos-service-local-update --follow
 ```
+
+
+### Get the URL where the Lambda code .zip file is
+
+```bash
+aws lambda get-function --profile localstack --endpoint-url=http://localhost:4566 --function-name todos-service-local-list --query 'Code.Location'
+```
+
+
+### Layers
+
+#### List layers
+```bash
+aws lambda list-layers --profile localstack --endpoint-url=http://localhost:4566 --query Content.Location --output text
+```
+
+#### Get layer source code by ARN (works on LocalStack)
+```bash
+aws lambda get-layer-version-by-arn --profile localstack --endpoint-url=http://localhost:4566 --arn arn:aws:lambda:us-east-1:000000000000:layer:todos-service-local-python-requirements:1 --query Content.Location --output text
+```
+
+#### Get layer source code by layer name (does NOT work on LocalStack)
+```bash
+aws lambda get-layer-version --profile localstack --endpoint-url=http://localhost:4566 --layer-name pythonRequirements --version-number 1 --query Content.Location --output text
+```

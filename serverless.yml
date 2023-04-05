@@ -1,13 +1,34 @@
 service: todos-service
 
+
 plugins:
   - serverless-localstack
+  - serverless-python-requirements
+
 
 custom:
   localstack:
     stages:
       - local
-    debug: true
+#    debug: true
+
+  pythonRequirements:
+    dockerizePip: false
+    useDownloadCache: false
+    useStaticCache: false
+    slim: true
+
+
+package:
+  individually: true
+  patterns:
+    - "!todos/__pycache__"
+    - "!node_modules"
+    - "!.idea"
+    - "!.pre-commit-config.yaml"
+    - "!package-lock.json"
+    - "!postman_collection.json"
+
 
 provider:
   name: aws
@@ -28,9 +49,10 @@ provider:
             - dynamodb:DeleteItem
           Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
 
+
 functions:
   create:
-    handler: todos/create.handler
+    handler: todos.create.handler
     events:
       - http:
           path: todos
@@ -38,15 +60,15 @@ functions:
           cors: true
 
   list:
-    handler: todos/list.handler
+    handler: todos.list.handler
     events:
       - http:
           path: todos
           method: get
           cors: true
 
-  get:
-    handler: todos/get.handler
+  read:
+    handler: todos.read.handler
     events:
       - http:
           path: todos/{id}
@@ -54,7 +76,7 @@ functions:
           cors: true
 
   update:
-    handler: todos/update.handler
+    handler: todos.update.handler
     events:
       - http:
           path: todos/{id}
@@ -62,12 +84,13 @@ functions:
           cors: true
 
   delete:
-    handler: todos/delete.handler
+    handler: todos.delete.handler
     events:
       - http:
           path: todos/{id}
           method: delete
           cors: true
+
 
 resources:
   Resources:
