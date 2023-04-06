@@ -1,4 +1,6 @@
-from boto3 import resource
+from typing import Any
+
+import boto3
 
 from todos.environment import EnvironmentVariable, get_environment_variable_or_raise
 
@@ -16,7 +18,7 @@ class LambdaResponseKey:
     BODY: str = "body"
 
 
-def get_dynamodb_table():
+def get_dynamodb_table() -> Any:
     endpoint_url = get_environment_variable_or_raise(
         EnvironmentVariable.AWS_ENDPOINT_URL,
     )
@@ -24,11 +26,13 @@ def get_dynamodb_table():
         EnvironmentVariable.DYNAMODB_TABLE,
     )
 
-    dynamodb = resource(
+    dynamodb = boto3.resource(
         AwsResource.DYNAMODB,
         **{
             AwsResourceSetting.ENDPOINT_URL: endpoint_url,
         },
     )
+
+    print("dynamodb.Table(table_name): ", dynamodb.Table(table_name))
 
     return dynamodb.Table(table_name)

@@ -1,13 +1,13 @@
 import json
 import logging
-from typing import Dict
+from typing import Any, Dict
 
 from todos.aws import LambdaResponseKey, get_dynamodb_table
 from todos.http import StatusCode
 from todos.utils import get_current_utc_time
 
 
-def handler(event: Dict, context: Dict) -> Dict:
+def handler(event: Dict[Any, Any], context: Dict[Any, Any]) -> Dict[str, Any]:
     data = json.loads(event["body"])
 
     if "text" not in data or "checked" not in data:

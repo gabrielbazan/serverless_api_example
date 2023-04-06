@@ -1,10 +1,10 @@
-from typing import Dict
+from typing import Any, Dict
 
 from todos.aws import LambdaResponseKey, get_dynamodb_table
 from todos.http import StatusCode
 
 
-def handler(event: Dict, context: Dict) -> Dict:
+def handler(event: Dict[Any, Any], context: Dict[Any, Any]) -> Dict[str, Any]:
     table = get_dynamodb_table()
 
     table.delete_item(Key={"id": event["pathParameters"]["id"]})
