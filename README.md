@@ -113,6 +113,8 @@ aws lambda get-function --profile localstack --endpoint-url=http://localhost:456
 
 ### Layers
 
+Although you can only use layers in LocalStack **Pro**, these can be useful if you paid for it.
+
 #### List layers
 ```bash
 aws lambda list-layers --profile localstack --endpoint-url=http://localhost:4566 --query Content.Location --output text
