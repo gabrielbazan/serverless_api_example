@@ -1,6 +1,6 @@
 from boto3 import resource
 
-from .environment import EnvironmentVariable, get_environment_variable_or_raise
+from todos.environment import EnvironmentVariable, get_environment_variable_or_raise
 
 
 class AwsResource:

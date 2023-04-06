@@ -1,6 +1,6 @@
 import json
 
-from .aws import get_dynamodb_table
+from todos.aws import get_dynamodb_table
 
 
 def handler(event, context):
