@@ -4,16 +4,16 @@ from todos.environment import EnvironmentVariable, get_environment_variable_or_r
 
 
 class AwsResource:
-    DYNAMODB = "dynamodb"
+    DYNAMODB: str = "dynamodb"
 
 
 class AwsResourceSetting:
-    ENDPOINT_URL = "endpoint_url"
+    ENDPOINT_URL: str = "endpoint_url"
 
 
-class LambdaResponseField:
+class LambdaResponseKey:
     STATUS_CODE = "statusCode"
-    BODY = "body"
+    BODY: str = "body"
 
 
 def get_dynamodb_table():

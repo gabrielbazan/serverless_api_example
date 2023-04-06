@@ -1,33 +1,34 @@
 import json
 import logging
-import time
 import uuid
+from typing import Dict
 
-from todos.aws import get_dynamodb_table
+from todos.aws import LambdaResponseKey, get_dynamodb_table
+from todos.http import StatusCode
+from todos.utils import get_current_utc_time
 
 
-def handler(event, context):
+def handler(event: Dict, context: Dict) -> Dict:
     data = json.loads(event["body"])
 
     if "text" not in data:
         logging.error("Validation Failed")
         raise Exception("Couldn't create the todo item.")
 
-    timestamp = str(time.time())
-
-    table = get_dynamodb_table()
+    now = get_current_utc_time()
 
     item = {
         "id": str(uuid.uuid1()),
         "text": data["text"],
         "checked": False,
-        "createdAt": timestamp,
-        "updatedAt": timestamp,
+        "createdAt": now,
+        "updatedAt": now,
     }
 
+    table = get_dynamodb_table()
     table.put_item(Item=item)
 
     return {
-        "statusCode": 200,
-        "body": json.dumps(item),
+        LambdaResponseKey.STATUS_CODE: StatusCode.OK,
+        LambdaResponseKey.BODY: item,
     }

@@ -1,18 +1,18 @@
 import json
 import logging
-import time
+from typing import Dict
 
-from todos.aws import get_dynamodb_table
+from todos.aws import LambdaResponseKey, get_dynamodb_table
+from todos.http import StatusCode
+from todos.utils import get_current_utc_time
 
 
-def handler(event, context):
+def handler(event: Dict, context: Dict) -> Dict:
     data = json.loads(event["body"])
 
     if "text" not in data or "checked" not in data:
         logging.error("Validation Failed")
         raise Exception("Couldn't update the todo item.")
-
-    timestamp = str(time.time())
 
     table = get_dynamodb_table()
 
@@ -24,7 +24,7 @@ def handler(event, context):
         ExpressionAttributeValues={
             ":text": data["text"],
             ":checked": data["checked"],
-            ":updatedAt": timestamp,
+            ":updatedAt": get_current_utc_time(),
         },
         UpdateExpression="SET #todo_text = :text, "
         "checked = :checked, "
@@ -32,9 +32,7 @@ def handler(event, context):
         ReturnValues="ALL_NEW",
     )
 
-    print(result["Attributes"])
-
     return {
-        "statusCode": 200,
-        "body": json.dumps(result["Attributes"]),
+        LambdaResponseKey.STATUS_CODE: StatusCode.OK,
+        LambdaResponseKey.BODY: json.dumps(result["Attributes"]),
     }
