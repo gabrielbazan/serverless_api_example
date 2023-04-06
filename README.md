@@ -25,11 +25,11 @@ pip install localstack
 
 ### Install Serverless Framework Plugins
 
-Go to the root directory of this repo and install the _serverless-localstack_ plugin:
+Go to the root directory of this repo and install the plugins:
 ```bash
 cd serverless_api_example
 
-npm install --save-dev serverless-localstack
+npm i
 ```
 
 ### Install and Configure the AWS CLI
@@ -75,6 +75,11 @@ functions:
   get: todos-service-read
   update: todos-service-update
   delete: todos-service-delete
+```
+
+You can alternatively start localstack as a daemon and deploy with a single command:
+```bash
+make deploy_local
 ```
 
 
