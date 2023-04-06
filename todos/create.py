@@ -8,7 +8,7 @@ from todos.http import StatusCode
 from todos.utils import get_current_utc_time
 
 
-def handler(event: Dict[Any, Any], context: Dict[Any, Any]) -> Dict[str, Any]:
+def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     data = json.loads(event["body"])
 
     if "text" not in data:
