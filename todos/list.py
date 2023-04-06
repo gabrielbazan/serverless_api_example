@@ -8,9 +8,7 @@ from todos.settings import ListResource
 def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     table = get_dynamodb_table()
 
-    result = table.scan(
-        Limit=ListResource.DEFAULT_LIMIT,
-    )
+    result = table.scan(Limit=ListResource.DEFAULT_LIMIT)
 
     items = result["Items"]
 
