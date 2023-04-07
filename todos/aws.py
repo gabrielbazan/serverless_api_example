@@ -13,9 +13,13 @@ class AwsResourceSetting:
     ENDPOINT_URL: str = "endpoint_url"
 
 
-class LambdaResponseKey:
-    STATUS_CODE = "statusCode"
-    BODY: str = "body"
+class Lambda:
+    class Event:
+        BODY: str = "body"
+
+    class Response:
+        STATUS_CODE = "statusCode"
+        BODY: str = "body"
 
 
 def get_dynamodb_table() -> Any:
@@ -32,7 +36,5 @@ def get_dynamodb_table() -> Any:
             AwsResourceSetting.ENDPOINT_URL: endpoint_url,
         },
     )
-
-    print("dynamodb.Table(table_name): ", dynamodb.Table(table_name))
 
     return dynamodb.Table(table_name)

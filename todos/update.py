@@ -2,7 +2,7 @@ import json
 import logging
 from typing import Any, Dict
 
-from todos.aws import LambdaResponseKey, get_dynamodb_table
+from todos.aws import Lambda, get_dynamodb_table
 from todos.http import StatusCode
 from todos.utils import get_current_utc_time
 
@@ -33,6 +33,6 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     )
 
     return {
-        LambdaResponseKey.STATUS_CODE: StatusCode.OK,
-        LambdaResponseKey.BODY: json.dumps(result["Attributes"]),
+        Lambda.Response.STATUS_CODE: StatusCode.OK,
+        Lambda.Response.BODY: json.dumps(result["Attributes"]),
     }

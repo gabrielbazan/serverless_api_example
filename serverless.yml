@@ -24,10 +24,13 @@ package:
   patterns:
     - "!todos/__pycache__"
     - "!node_modules"
+    - "!venv"
+    - "!.mypy_cache"
     - "!.idea"
     - "!.pre-commit-config.yaml"
     - "!package-lock.json"
     - "!postman_collection.json"
+    - "!tox.ini"
 
 
 provider:
