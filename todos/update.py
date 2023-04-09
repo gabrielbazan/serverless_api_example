@@ -1,38 +1,59 @@
-import json
-import logging
 from typing import Any, Dict
 
-from todos.aws import Lambda, get_dynamodb_table
+from botocore.exceptions import ClientError
+
+from todos.aws import Dynamo, Error, Lambda, error_is, get_dynamodb_table
 from todos.http import StatusCode
-from todos.utils import get_current_utc_time
+from todos.models import ToDoUpdate
+from todos.serialization import (
+    build_error_response,
+    build_response,
+    validate_request_body,
+)
+from todos.settings import DYNAMODB_TABLE_KEY
 
 
 def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
-    data = json.loads(event["body"])
+    item_id = event[Lambda.Event.PATH_PARAMETERS][DYNAMODB_TABLE_KEY]
 
-    if "text" not in data or "checked" not in data:
-        logging.error("Validation Failed")
-        raise Exception("Couldn't update the todo item.")
+    data, errors = validate_request_body(event, ToDoUpdate)
 
-    table = get_dynamodb_table()
+    if errors:
+        return errors
 
-    result = table.update_item(
-        Key={"id": event["pathParameters"]["id"]},
-        ExpressionAttributeNames={
-            "#todo_text": "text",
-        },
-        ExpressionAttributeValues={
-            ":text": data["text"],
-            ":checked": data["checked"],
-            ":updatedAt": get_current_utc_time(),
-        },
-        UpdateExpression="SET #todo_text = :text, "
-        "checked = :checked, "
-        "updatedAt = :updatedAt",
-        ReturnValues="ALL_NEW",
-    )
+    try:
+        table = get_dynamodb_table()
 
-    return {
-        Lambda.Response.STATUS_CODE: StatusCode.OK,
-        Lambda.Response.BODY: json.dumps(result["Attributes"]),
-    }
+        result = table.update_item(
+            Key={DYNAMODB_TABLE_KEY: item_id},
+            ConditionExpression=f"attribute_exists({DYNAMODB_TABLE_KEY})",
+            ExpressionAttributeValues=build_expression_attribute_values(data),
+            UpdateExpression=build_update_expression(data),
+            ReturnValues="ALL_NEW",
+        )
+
+        return build_response(
+            StatusCode.OK,
+            result[Dynamo.UpdateItem.Response.ATTRIBUTES],
+        )
+    except ClientError as e:
+        if error_is(e, Error.CONDITIONAL_CHECK_FAILED):
+            return build_error_response(StatusCode.NOT_FOUND, "The item does not exist")
+
+        raise
+
+
+def build_update_expression(data: Dict[str, Any]) -> str:
+    expression = "SET "
+
+    for key, value in data.items():
+        if value is not None:
+            expression += f"{key} = :{key}, "
+
+    expression = expression[:-2]
+
+    return expression
+
+
+def build_expression_attribute_values(data: Dict[str, Any]) -> Dict[str, Any]:
+    return {f":{key}": value for key, value in data.items() if value is not None}
