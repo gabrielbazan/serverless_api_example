@@ -31,6 +31,7 @@ package:
     - "!package-lock.json"
     - "!postman_collection.json"
     - "!tox.ini"
+    - "!Makefile"
 
 
 provider:

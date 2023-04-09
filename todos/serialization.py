@@ -1,6 +1,8 @@
 import json
 from typing import Any, Dict, Optional, Tuple
 
+from pydantic.error_wrappers import ValidationError
+
 from todos.aws import Lambda
 from todos.http import StatusCode
 from todos.settings import ERROR_RESPONSE_KEY
@@ -13,8 +15,8 @@ def validate_request_body(
         body = json.loads(event[Lambda.Event.BODY])
         data = model(**body).to_dict()
         return data, None
-    except Exception:
-        errors = build_error_response(StatusCode.BAD_REQUEST, "Malformed request body")
+    except ValidationError as e:
+        errors = build_error_response(StatusCode.BAD_REQUEST, e.errors())
         return None, errors
 
 
