@@ -39,13 +39,17 @@ jobs:
         run: |
           make run_unit_tests
 
+      - name: Install LocalStack
+        run: |
+          pip install localstack
+
       - name: Install Serverless
         run: |
           npm install -g serverless
 
-      - name: Install LocalStack
+      - name: Install Serverless plugins
         run: |
-          pip install localstack
+          npm i
 
       - name: Run integration tests
         run: |
