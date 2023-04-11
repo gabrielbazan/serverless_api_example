@@ -51,7 +51,10 @@ jobs:
         run: |
           npm i
 
-      - name: Run integration tests
+      - name: Deploy Serverless to LocalStack
         run: |
           make deploy_local
+
+      - name: Run integration tests
+        run: |
           make run_integration_tests
