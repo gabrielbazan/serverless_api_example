@@ -41,7 +41,6 @@ install_test_requirements:
 install_all_requirements: install_requirements install_test_requirements
 
 
-
 deploy_local:
 	localstack stop || true
 	localstack start -d
