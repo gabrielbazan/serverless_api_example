@@ -9,16 +9,37 @@
     <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
 </p>
 
+Yet another TODOs REST API. This one is based on AWS Lambdas, accessible through the AWS API Gateway, and persist into a DynamoDB table.
 
-A TODOs REST API put together with Serverless Framework, which uses the following AWS services:
- 1. AWS API Gateway
- 2. AWS Lambda
- 3. AWS DynamoDB
+  * It uses [Pydantic](https://docs.pydantic.dev/) for schema valiation.
+  * It can be deployed to AWS or LocalStack using the [Serverless Framework](https://www.serverless.com/).
+
+It also includes:
+  * Unit tests.
+  * Functional tests, which are executed against [LocalStack](https://github.com/localstack/localstack).
+  * [Pre-commit](https://pre-commit.com/) hooks: [Black](https://github.com/psf/black), [ISort](https://pycqa.github.io/isort/), [Flake8](https://flake8.pycqa.org/en/latest/), and [MyPy](https://mypy-lang.org/).
+  * A [Makefile](https://www.gnu.org/software/make/manual/make.html) with useful commands.
+  * A [Postman](https://www.postman.com/) colletion to use the API.
 
 
 ## Structure
 
-The application is located at the [todos](/todos) package. Each AWS Lambda handler function is on a separate file.
+The [serverless.yml](/serverless.yml) file contains the Serverless configuration to deploy the stack to either AWS or LocalStack.
+
+The application logic is located in the [todos](/todos) package. Each AWS Lambda handler function is on a separate file. Common code is in the same package.
+
+Unit tests are in the [todos/tests](/todos/tests) package.
+
+Integration tests are in the [integration_tests](/integration_tests) package.
+
+The [postman_collection.json](/postman_collection.json) file is the Postman collection. Go ahead and import it to your account! It has environment variables.
+
+You can find useful commands in the [Makefile](/Makefile).
+
+Python requirements:
+  1. The requirements.txt file contains the essential Python dependencies required by the application logic to run.
+  2. The requirements.dev.txt file contains the Python dependencies you need to have installed in your environment to contribute to the application logic.
+  3. The requirements.test.txt file contains the Python dependencies required to run tests.
 
 
 ## Setup
@@ -95,11 +116,13 @@ make deploy_local
 
 ## Check the API out
 
-You can use the [Postman Collection in this repo](/postman_collection.json) to interact with the API.
+You can use the [Postman Collection in this repo](/postman_collection.json) to use the API.
 Just import it into Postman and set the collection variables (the API ID, mainly).
 
 
 ## Useful Stuff
+
+Just a bunch of commands that may be useful for you.
 
 ### Redeploy a Function
 
@@ -128,7 +151,7 @@ aws lambda get-function --profile localstack --endpoint-url=http://localhost:456
 
 ### Layers
 
-Although you can only use layers in LocalStack **Pro**, these can be useful if you paid for it.
+Although you can only use layers if you're using LocalStack **Pro**, the following can be useful if you paid for it.
 
 #### List layers
 ```bash
