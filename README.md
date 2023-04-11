@@ -1,5 +1,14 @@
 # Serverless API Example
 
+<p align="center">
+    <a href="https://github.com/application-creators/create_app/actions"><img alt="Test Workflow Status" src="https://github.com/gabrielbazan/serverless_api_example/workflows/Test/badge.svg"></a>
+    <!-- <a href="https://coveralls.io/github/application-creators/create_app?branch=main"><img alt="Coverage Status" src="https://coveralls.io/repos/github/application-creators/create_app/badge.svg?branch=main"></a> -->
+    <a href="https://github.com/pre-commit/pre-commit"><img alt="Pre-commit" src="https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white"></a>
+    <a href="http://mypy-lang.org/"><img alt="Checked with mypy" src="http://www.mypy-lang.org/static/mypy_badge.svg"></a>
+    <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
+</p>
+
+
 A TODOs REST API put together with Serverless Framework, which uses the following AWS services:
  1. AWS API Gateway
  2. AWS Lambda
