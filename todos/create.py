@@ -14,4 +14,4 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
 
     get_dynamodb_table().put_item(**{Dynamo.PutItem.Request.ITEM: data})
 
-    return build_response(StatusCode.OK, data)
+    return build_response(StatusCode.CREATED, data)

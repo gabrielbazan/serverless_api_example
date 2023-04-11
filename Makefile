@@ -52,3 +52,9 @@ run_unit_tests:
 	@echo "Running unit tests..."
 	@. ${VIRTUALENV_PATH}/bin/activate && python -m unittest discover -s todos -p '*_test.py'
 	@echo "Done!"
+
+
+run_integration_tests:
+	@echo "Running integration tests..."
+	@. ${VIRTUALENV_PATH}/bin/activate && python -m unittest discover -s integration_tests -p '*_test.py'
+	@echo "Done!"
