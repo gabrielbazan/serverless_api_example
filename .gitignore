@@ -1,6 +1,9 @@
 node_modules/
 .serverless/
 .idea/
-package.json
 package-lock.json
 __pycache__
+.mypy_cache/
+venv/
+.venv/
+.vscode/

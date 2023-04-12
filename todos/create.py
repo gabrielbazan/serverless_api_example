@@ -1,33 +1,17 @@
-import json
-import logging
-import time
-import uuid
+from typing import Any, Dict
 
-from todos.aws import get_dynamodb_table
+from todos.aws import Dynamo, get_dynamodb_table
+from todos.http import StatusCode
+from todos.models import ToDoCreation
+from todos.serialization import build_response, validate_request_body
 
 
-def handler(event, context):
-    data = json.loads(event["body"])
+def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
+    data, errors = validate_request_body(event, ToDoCreation)
 
-    if "text" not in data:
-        logging.error("Validation Failed")
-        raise Exception("Couldn't create the todo item.")
+    if errors:
+        return errors
 
-    timestamp = str(time.time())
+    get_dynamodb_table().put_item(**{Dynamo.PutItem.Request.ITEM: data})
 
-    table = get_dynamodb_table()
-
-    item = {
-        "id": str(uuid.uuid1()),
-        "text": data["text"],
-        "checked": False,
-        "createdAt": timestamp,
-        "updatedAt": timestamp,
-    }
-
-    table.put_item(Item=item)
-
-    return {
-        "statusCode": 200,
-        "body": json.dumps(item),
-    }
+    return build_response(StatusCode.CREATED, data)
